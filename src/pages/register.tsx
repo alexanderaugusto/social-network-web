@@ -1,18 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
 
-const Home: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>Rede Social</title>
+        <title>Cadastrar</title>
       </Head>
 
       <main>
-        <p>Home</p>
+        <p>Register</p>
       </main>
     </div>
   )
 }
 
-export default Home
+export default Register
