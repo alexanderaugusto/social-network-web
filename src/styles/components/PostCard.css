@@ -1,0 +1,82 @@
+.post-card-container{
+  background-color: #FFFFFF;
+  width: 600px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
+  padding: 10px;
+  margin: 100px;
+}
+
+.post-card-container .user{
+  display: flex;
+  align-items: center;
+}
+
+.post-card-container .user img{
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.post-card-container .user label{
+  color: #6c757d;
+  margin-left: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.post-card-container .user label:hover{
+  text-decoration: underline;
+}
+
+.post-card-container .post{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top: 2px solid rgba(108, 117, 125, 0.1);
+  border-bottom: 2px solid rgba(108, 117, 125, 0.1);
+}
+
+.post-card-container .post h2{
+  color: #6c757d;
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.post-card-container .post img{
+  width: calc(100% + 20px);
+  margin-top: 5px;
+  margin-left: -10px;
+}
+
+.post-card-container .actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-card-container .actions button{
+  width: 100%;
+  height: 40px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: transparent;
+}
+.post-card-container .actions button:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.post-card-container .actions button #icon{
+  color: #6c757d;
+  font-size: 17px;
+}
+
+.post-card-container .actions button label{
+  color: #6c757d;
+  font-size: 17px;
+  margin-left: 10px;
+  cursor: pointer;
+}
