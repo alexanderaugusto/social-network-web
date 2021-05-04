@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/auth'
+import api from '../services/api'
 import Button from './Button'
 import Input from './Input'
 
@@ -10,12 +10,26 @@ import LazyLogo from '../assets/lazy-black.png'
 import SearchIcon from '@material-ui/icons/Search'
 
 const Header: React.FC = () => {
-  const router = useRouter()
   const auth = useAuth()
   const [searchText, setSearchText] = useState('')
+  const [searchedUsers, setSearchedUsers] = useState([])
+  const [searchFocus, setSearchFocus] = useState(false)
 
-  function searchUser() {
-    router.push(`/users?name=${searchText}`)
+  async function searchUsers() {
+    const config = {
+      params: {
+        name: searchText
+      }
+    }
+
+    await api
+      .get('/users/search', config)
+      .then(res => {
+        setSearchedUsers(res.data.content)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   return (
@@ -33,7 +47,7 @@ const Header: React.FC = () => {
             className="search-input"
             onSubmit={e => {
               e.preventDefault()
-              searchUser()
+              searchUsers()
             }}
           >
             <Input
@@ -41,12 +55,27 @@ const Header: React.FC = () => {
               placeholder="Procurar novo usuário"
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
+              onFocus={() => setSearchFocus(true)}
+              onBlur={() => setSearchFocus(false)}
+              onKeyUp={() => searchUsers()}
             />
-            <Button type="submit">
-              <a>
-                <SearchIcon id="icon" />
-              </a>
-            </Button>
+            <SearchIcon id="icon" />
+            {searchFocus && (
+              <div className="users-container">
+                {searchedUsers.map(user => {
+                  return (
+                    <div key={user.id} className="user">
+                      <Link href={`/profile/${user.id}`}>
+                        <a>
+                          <img src={user.avatar} alt={user.name} />
+                          <label>{user.name}</label>
+                        </a>
+                      </Link>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </form>
         </div>
         {auth.signed && (
