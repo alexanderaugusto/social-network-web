@@ -68,7 +68,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>Rede Social</title>
+        <title>lazy</title>
       </Head>
 
       <main>

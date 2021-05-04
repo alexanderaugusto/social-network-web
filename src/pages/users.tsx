@@ -1,12 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
-import { Header } from '../../components'
+import { Header } from '../components'
 
-const Profile: React.FC = () => {
+const Login: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>Perfil</title>
+        <title>Procurar usuários</title>
       </Head>
 
       <main>
@@ -16,4 +16,4 @@ const Profile: React.FC = () => {
   )
 }
 
-export default Profile
+export default Login

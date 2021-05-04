@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import api from '../../services/api'
-import { Button, Input } from '../../components'
+import { Button, Header, Input } from '../../components'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import SendIcon from '@material-ui/icons/Send'
@@ -129,6 +129,8 @@ const Post: React.FC = () => {
       </Head>
 
       <main className="post-page">
+        <Header />
+
         {postInfo && (
           <div className="post">
             <div className="post-image">
