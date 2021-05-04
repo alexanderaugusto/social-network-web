@@ -7,6 +7,7 @@ import '../styles/global.css'
 import '../styles/pages/Home.css'
 import '../styles/pages/Post.css'
 import '../styles/pages/PostMedia.css'
+import '../styles/pages/Profile.css'
 
 import '../styles/components/Button.css'
 import '../styles/components/Header.css'

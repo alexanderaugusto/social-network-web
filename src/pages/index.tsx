@@ -36,6 +36,7 @@ const Home: React.FC = () => {
     media:
       'https://img.freepik.com/vetores-gratis/imagens-animadas-abstratas-neon-lines_23-2148344065.jpg?size=626&ext=jpg'
   })
+
   const getUserTimeline = useCallback(async () => {
     await api
       .get('/users/timeline')
@@ -58,6 +59,7 @@ const Home: React.FC = () => {
     newPosts = posts.map(post => {
       if (post.id === postId) {
         post.reactions.push(1)
+        post.totalReactions += 1
         return post
       }
 
@@ -72,6 +74,7 @@ const Home: React.FC = () => {
       if (post.id === postId) {
         const index = post.reactions.indexOf(1)
         post.reactions.splice(index)
+        post.totalReactions -= 1
         return post
       }
 
