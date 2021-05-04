@@ -9,8 +9,10 @@ const Login: React.FC = () => {
         <title>Procurar usuários</title>
       </Head>
 
-      <main>
-        <Header />
+      <Header />
+
+      <main className="page users-page">
+        <p>oi</p>
       </main>
     </div>
   )

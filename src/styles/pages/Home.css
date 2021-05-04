@@ -1,0 +1,8 @@
+.home-page .timeline{
+  width: 95vw;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

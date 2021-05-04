@@ -71,19 +71,21 @@ const Home: React.FC = () => {
         <title>lazy</title>
       </Head>
 
-      <main>
-        <Header />
+      <Header />
 
-        {posts.map(post => {
-          return (
-            <PostCard
-              key={post.id}
-              post={post}
-              onAddReaction={() => addReactionToPost(post.id)}
-              onRemoveReaction={() => removeReactionFromPost(post.id)}
-            />
-          )
-        })}
+      <main className="page home-page">
+        <div className="timeline">
+          {posts.map(post => {
+            return (
+              <PostCard
+                key={post.id}
+                post={post}
+                onAddReaction={() => addReactionToPost(post.id)}
+                onRemoveReaction={() => removeReactionFromPost(post.id)}
+              />
+            )
+          })}
+        </div>
       </main>
     </div>
   )

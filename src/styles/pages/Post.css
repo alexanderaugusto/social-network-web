@@ -1,9 +1,3 @@
-.post-page{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .post-page .post{
   display: flex;
   max-width: 1000px;

@@ -9,8 +9,10 @@ const Profile: React.FC = () => {
         <title>Perfil</title>
       </Head>
 
-      <main>
-        <Header />
+      <Header />
+
+      <main className="page profile-page">
+        <p>oi</p>
       </main>
     </div>
   )

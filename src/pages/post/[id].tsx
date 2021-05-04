@@ -128,9 +128,9 @@ const Post: React.FC = () => {
         <title>Detalhes do Post</title>
       </Head>
 
-      <main className="post-page">
-        <Header />
+      <Header />
 
+      <main className="page post-page">
         {postInfo && (
           <div className="post">
             <div className="post-image">

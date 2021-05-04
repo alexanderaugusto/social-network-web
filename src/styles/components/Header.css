@@ -5,6 +5,9 @@
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
   display: flex;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .header-container .header{

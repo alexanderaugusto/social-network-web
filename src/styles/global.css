@@ -32,3 +32,11 @@ a{
   justify-content: center;
   align-items: center;
 }
+
+.page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  padding-bottom: 20px;
+}

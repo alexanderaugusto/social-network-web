@@ -3,6 +3,7 @@ import { AppProps } from 'next/app'
 
 import '../styles/global.css'
 
+import '../styles/pages/Home.css'
 import '../styles/pages/Post.css'
 import '../styles/pages/PostMedia.css'
 
