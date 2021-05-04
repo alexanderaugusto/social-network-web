@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuth } from '../contexts/auth'
 import Button from './Button'
 import Input from './Input'
 
@@ -10,11 +11,7 @@ import SearchIcon from '@material-ui/icons/Search'
 
 const Header: React.FC = () => {
   const router = useRouter()
-  const auth = {
-    id: 1,
-    avatar: 'https://www.pngkey.com/png/detail/193-1938385_-pikachu-avatar.png',
-    name: 'Alexander Augusto'
-  }
+  const auth = useAuth()
   const [searchText, setSearchText] = useState('')
 
   function searchUser() {
@@ -52,13 +49,15 @@ const Header: React.FC = () => {
             </Button>
           </form>
         </div>
-        <div className="user">
-          <Link href={`/profile/${auth.id}`}>
-            <a>
-              <img src={auth.avatar} alt={auth.name} />
-            </a>
-          </Link>
-        </div>
+        {auth.signed && (
+          <div className="user">
+            <Link href={`/profile/${auth.user.id}`}>
+              <a>
+                <img src={auth.user.avatar} alt={auth.user.name} />
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )

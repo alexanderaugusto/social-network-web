@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuth } from '../../contexts/auth'
 import api from '../../services/api'
 import { Button, Header, Input } from '../../components'
 
@@ -31,6 +32,7 @@ type PostCommentsProps = {
 }
 
 const Post: React.FC = () => {
+  const auth = useAuth()
   const router = useRouter()
   const { id: postId } = router.query
   const [postInfo, setPostInfo] = useState<PostInfoProps>(null)
@@ -80,17 +82,17 @@ const Post: React.FC = () => {
   )
 
   useEffect(() => {
-    if (postId) {
+    if (auth.signed && postId) {
       getPostInfo()
       getPostComments()
     }
-  }, [getPostInfo, getPostComments, postId])
+  }, [getPostInfo, getPostComments, postId, auth.signed])
 
   useEffect(() => {
-    if (postId && postInfo) {
+    if (auth.signed && postId && postInfo) {
       getOwnerPosts(postInfo)
     }
-  }, [postId, postInfo, getOwnerPosts])
+  }, [postId, postInfo, getOwnerPosts, auth.signed])
 
   async function addComment() {
     const data = {
@@ -164,11 +166,11 @@ const Post: React.FC = () => {
                   return (
                     <div key={comment.id} className="comment-container">
                       <div className="user">
-                        <Link href={`/profile/${postInfo.owner.id}`}>
+                        <Link href={`/profile/${comment.user.id}`}>
                           <a>
                             <img
-                              src={postInfo.owner.avatar}
-                              alt={postInfo.owner.name}
+                              src={comment.user.avatar}
+                              alt={comment.user.name}
                             />
                           </a>
                         </Link>
@@ -176,7 +178,7 @@ const Post: React.FC = () => {
                       <div className="comment">
                         <p>{comment.description}</p>
                       </div>
-                      {comment.user.id === 1 && (
+                      {comment.user.id === auth.user.id && (
                         <Button onClick={() => deleteComment(comment.id)}>
                           <DeleteIcon id="icon" />
                         </Button>

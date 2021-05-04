@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import api from '../services/api'
+import { useAuth } from '../contexts/auth'
 import { Button, Header, InputArea, PostCard } from '../components'
 
 import ImageIcon from '@material-ui/icons/Image'
@@ -28,11 +29,7 @@ type NewPostProps = {
 }
 
 const Home: React.FC = () => {
-  const auth = {
-    id: 1,
-    avatar: 'https://www.pngkey.com/png/detail/193-1938385_-pikachu-avatar.png',
-    name: 'Alexander Augusto'
-  }
+  const auth = useAuth()
   const [posts, setPosts] = useState<Array<PostProps>>([])
   const [newPost, setNewPost] = useState<NewPostProps>({
     description: '',
@@ -51,8 +48,10 @@ const Home: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    getUserTimeline()
-  }, [getUserTimeline])
+    if (auth.signed) {
+      getUserTimeline()
+    }
+  }, [getUserTimeline, auth.signed])
 
   async function addReactionToPost(postId: number) {
     let newPosts = posts
@@ -100,6 +99,10 @@ const Home: React.FC = () => {
       })
   }
 
+  if (!auth.signed) {
+    return null
+  }
+
   return (
     <div>
       <Head>
@@ -112,14 +115,14 @@ const Home: React.FC = () => {
         <div className="timeline">
           <div className="add-post">
             <div className="user">
-              <Link href={`/profile/${auth.id}`}>
+              <Link href={`/profile/${auth.user.id}`}>
                 <a>
-                  <img src={auth.avatar} alt={auth.name} />
+                  <img src={auth.user.avatar} alt={auth.user.name} />
                 </a>
               </Link>
-              <Link href={`/profile/${auth.id}`}>
+              <Link href={`/profile/${auth.user.id}`}>
                 <a>
-                  <label>{auth.name}</label>
+                  <label>{auth.user.name}</label>
                 </a>
               </Link>
             </div>

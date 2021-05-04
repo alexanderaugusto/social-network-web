@@ -1,5 +1,6 @@
 import React from 'react'
 import { AppProps } from 'next/app'
+import { AuthProvider } from '../contexts/auth'
 
 import '../styles/global.css'
 
@@ -14,7 +15,11 @@ import '../styles/components/InputArea.css'
 import '../styles/components/PostCard.css'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
 }
 
 export default MyApp

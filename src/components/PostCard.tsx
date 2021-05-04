@@ -2,6 +2,7 @@ import React from 'react'
 import Button from './Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuth } from '../contexts/auth'
 import api from '../services/api'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
@@ -36,6 +37,7 @@ const PostCard: React.FC<PostCardProps> = ({
   onRemoveReaction
 }) => {
   const router = useRouter()
+  const auth = useAuth()
 
   async function addReactionToPost() {
     await api
@@ -60,7 +62,11 @@ const PostCard: React.FC<PostCardProps> = ({
   }
 
   function isReactedByUser() {
-    return post.reactions.includes(1)
+    if (!auth.signed) {
+      return false
+    }
+
+    return post.reactions.includes(auth.user.id)
   }
 
   return (
