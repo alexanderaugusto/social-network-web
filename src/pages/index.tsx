@@ -1,24 +1,71 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
+import api from '../services/api'
 import { PostCard } from '../components'
 
-const USER = {
-  id: 1,
-  name: 'Alexander Augusto',
-  avatar: 'https://www.pngkey.com/png/detail/193-1938385_-pikachu-avatar.png'
+type UserProps = {
+  id: number
+  name: string
+  avatar: string
 }
 
-const POST = {
-  id: 1,
-  description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quis eaque placeat natus, hic dolorum amet neque sunt odio iure.',
-  media:
-    'https://lh3.googleusercontent.com/proxy/hjbEGvBproLi_sAipXzFDq6ffOkApbR1F7dc5Vp4xWvkJ1xhhnZWK0OD-xCOCTiikGXKtuSrDU_qJMtOmgpdDLc2IQi_ijEOfpAR4W-AanGhmyXw-TbDiVPI54dNTYReW1GiIfrMQ4WPVcrsUGUfgqNILGgQ8hHGTrUQwb8A',
-  totalReactions: 2,
-  totalComments: 10
+type PostProps = {
+  id: number
+  description: string
+  media: string | null
+  totalReactions: number
+  totalComments: number
+  owner: UserProps
+  reactions: [number]
 }
 
 const Home: React.FC = () => {
+  const [posts, setPosts] = useState<Array<PostProps>>([])
+
+  const getUserTimeline = useCallback(async () => {
+    await api
+      .get('/users/timeline')
+      .then(res => {
+        setPosts(res.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }, [])
+
+  useEffect(() => {
+    getUserTimeline()
+  }, [getUserTimeline])
+
+  async function addReactionToPost(postId: number) {
+    let newPosts = posts
+    newPosts = posts.map(post => {
+      if (post.id === postId) {
+        post.reactions.push(1)
+        return post
+      }
+
+      return post
+    })
+    setPosts(newPosts)
+  }
+
+  async function removeReactionFromPost(postId: number) {
+    let newPosts = posts
+    newPosts = newPosts.map(post => {
+      if (post.id === postId) {
+        const index = post.reactions.indexOf(1)
+        console.log(index)
+        post.reactions.splice(index)
+        return post
+      }
+
+      return post
+    })
+    setPosts(newPosts)
+  }
+
+  console.log(posts)
   return (
     <div>
       <Head>
@@ -27,7 +74,16 @@ const Home: React.FC = () => {
 
       <main>
         <p>Home</p>
-        <PostCard post={POST} user={USER} />
+        {posts.map(post => {
+          return (
+            <PostCard
+              key={post.id}
+              post={post}
+              onAddReaction={() => addReactionToPost(post.id)}
+              onRemoveReaction={() => removeReactionFromPost(post.id)}
+            />
+          )
+        })}
       </main>
     </div>
   )

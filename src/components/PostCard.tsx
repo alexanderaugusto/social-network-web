@@ -2,17 +2,11 @@ import React from 'react'
 import Button from './Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import api from '../services/api'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 import CommentIcon from '@material-ui/icons/Comment'
-
-type PostProps = {
-  id: number
-  description: string
-  media: string
-  totalReactions: number
-  totalComments: number
-}
 
 type UserProps = {
   id: number
@@ -20,25 +14,66 @@ type UserProps = {
   avatar: string
 }
 
-type PostCardProps = {
-  post: PostProps
-  user: UserProps
+type PostProps = {
+  id: number
+  description: string
+  media: string | null
+  totalReactions: number
+  totalComments: number
+  owner: UserProps
+  reactions: [number]
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, user }) => {
+type PostCardProps = {
+  post: PostProps
+  onAddReaction: () => void
+  onRemoveReaction: () => void
+}
+
+const PostCard: React.FC<PostCardProps> = ({
+  post,
+  onAddReaction,
+  onRemoveReaction
+}) => {
   const router = useRouter()
+
+  async function addReactionToPost() {
+    await api
+      .put(`/posts/${post.id}/reactions`)
+      .then(() => {
+        onAddReaction()
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  async function removeReactionFromPost() {
+    await api
+      .delete(`/posts/${post.id}/reactions`)
+      .then(() => {
+        onRemoveReaction()
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  function isReactedByUser() {
+    return post.reactions.includes(1)
+  }
 
   return (
     <div className="post-card-container">
       <div className="user">
-        <Link href={`/profile/${user.id}`}>
+        <Link href={`/profile/${post.owner.id}`}>
           <a>
-            <img src={user.avatar} alt={user.name} />
+            <img src={post.owner.avatar} alt={post.owner.name} />
           </a>
         </Link>
-        <Link href={`/profile/${user.id}`}>
+        <Link href={`/profile/${post.owner.id}`}>
           <a>
-            <label>{user.name}</label>
+            <label>{post.owner.name}</label>
           </a>
         </Link>
       </div>
@@ -47,8 +82,21 @@ const PostCard: React.FC<PostCardProps> = ({ post, user }) => {
         <img src={post.media} alt={post.description} />
       </div>
       <div className="actions">
-        <Button>
-          <FavoriteBorderIcon id="icon" />
+        <Button
+          className={isReactedByUser() ? 'user-reacted' : ''}
+          onClick={() => {
+            if (isReactedByUser()) {
+              removeReactionFromPost()
+            } else {
+              addReactionToPost()
+            }
+          }}
+        >
+          {isReactedByUser() ? (
+            <FavoriteIcon id="icon" />
+          ) : (
+            <FavoriteBorderIcon id="icon" />
+          )}
           <label>Curtir</label>
           <label>({post.totalReactions})</label>
         </Button>

@@ -64,19 +64,22 @@
   margin-left: 5px;
   margin-right: 5px;
   background-color: transparent;
+  color: #6c757d;
 }
 .post-card-container .actions button:hover{
   background-color: rgba(0, 0, 0, 0.1);
 }
 
 .post-card-container .actions button #icon{
-  color: #6c757d;
   font-size: 17px;
 }
 
 .post-card-container .actions button label{
-  color: #6c757d;
   font-size: 17px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.post-card-container .actions .user-reacted{
+  color: #065CF8;
 }
