@@ -7,6 +7,7 @@ import '../styles/pages/Post.css'
 import '../styles/pages/PostMedia.css'
 
 import '../styles/components/Button.css'
+import '../styles/components/Header.css'
 import '../styles/components/Input.css'
 import '../styles/components/PostCard.css'
 

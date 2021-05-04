@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import api from '../services/api'
-import { PostCard } from '../components'
+import { Header, PostCard } from '../components'
 
 type UserProps = {
   id: number
@@ -65,7 +65,6 @@ const Home: React.FC = () => {
     setPosts(newPosts)
   }
 
-  console.log(posts)
   return (
     <div>
       <Head>
@@ -73,7 +72,8 @@ const Home: React.FC = () => {
       </Head>
 
       <main>
-        <p>Home</p>
+        <Header />
+
         {posts.map(post => {
           return (
             <PostCard
