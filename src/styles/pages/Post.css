@@ -91,7 +91,7 @@
 }
 
 .post-page .post .post-info-container .comments-container .comment-container .comment{
-  background-color: #065CF8;
+  background-color: #363636;
   padding: 10px;
   border-radius: 8px;
 }
@@ -134,7 +134,8 @@
 }
 
 .post-page .owner-posts h1 span {
-  color: #065CF8;
+  color: #363636;
+  font-weight: bold;
 }
 
 .post-page .owner-posts .posts-container {

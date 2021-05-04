@@ -6,3 +6,67 @@
   align-items: center;
 }
 
+.home-page .timeline .add-post{
+  background-color: #FFFFFF;
+  width: 95vw;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page .timeline .add-post .user{
+  display: flex;
+  align-items: center;
+}
+
+.home-page .timeline .add-post .user img{
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.home-page .timeline .add-post .user label{
+  color: #6c757d;
+  margin-left: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.home-page .timeline .add-post .user label:hover{
+  text-decoration: underline;
+}
+
+.home-page .timeline .add-post .input-area textarea{
+  background-color: #DCDCDC;
+  border-radius: 10px;
+  color: #363636;
+  padding-left: 10px;
+  height: 70px;
+}
+
+.home-page .timeline .add-post .actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-page .timeline .add-post .actions #btn-image{
+  color: #363636;
+}
+
+.home-page .timeline .add-post .actions #btn-image label{
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.home-page .timeline .add-post .actions #btn-publish{
+  background-color: #363636;
+  padding: 10px 20px 10px 20px;
+  align-self: flex-end;
+  margin-top: 10px;
+}

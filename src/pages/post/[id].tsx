@@ -80,15 +80,17 @@ const Post: React.FC = () => {
   )
 
   useEffect(() => {
-    getPostInfo()
-    getPostComments()
-  }, [getPostInfo, getPostComments])
+    if (postId) {
+      getPostInfo()
+      getPostComments()
+    }
+  }, [getPostInfo, getPostComments, postId])
 
   useEffect(() => {
-    if (postInfo) {
+    if (postId && postInfo) {
       getOwnerPosts(postInfo)
     }
-  }, [postInfo, getOwnerPosts])
+  }, [postId, postInfo, getOwnerPosts])
 
   async function addComment() {
     const data = {
