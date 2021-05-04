@@ -68,7 +68,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>lazy</title>
+        <title>Lazy</title>
       </Head>
 
       <Header />
