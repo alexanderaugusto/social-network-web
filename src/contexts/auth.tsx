@@ -14,6 +14,7 @@ type AuthContextProps = {
   signIn: (email: string, password: string) => Promise<AxiosResponse>
   signOut: () => void
   user: UserProps
+  setUser: (user: UserProps) => void
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
@@ -79,7 +80,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user: user, signIn, signOut }}
+      value={{ signed: !!user, user: user, signIn, signOut, setUser }}
     >
       {children}
     </AuthContext.Provider>

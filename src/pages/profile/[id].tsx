@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Dropzone from 'react-dropzone'
 import { useAuth } from '../../contexts/auth'
 import api from '../../services/api'
 import { Button, Header, PostCard } from '../../components'
@@ -137,6 +138,28 @@ const Profile: React.FC = () => {
     setUserPosts(newPosts)
   }
 
+  async function changeAvatar(file) {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+
+    const data = new FormData()
+    data.append('file', file)
+
+    await api
+      .put(`/users/${auth.user.id}/avatar`, data, config)
+      .then(res => {
+        const { avatar } = res.data
+        setUser({ ...user, avatar })
+        auth.setUser(res.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
   return (
     <div>
       <Head>
@@ -153,10 +176,31 @@ const Profile: React.FC = () => {
           <div className="user-profile">
             <div className="user-info">
               <div className="user">
-                <img
-                  src={process.env.NEXT_PUBLIC_API_STORAGE + user.avatar}
-                  alt={user.name}
-                />
+                <Dropzone
+                  accept={['image/jpeg', 'image/png', 'image/webp']}
+                  onDrop={acceptedFiles => {
+                    if (acceptedFiles) {
+                      changeAvatar(acceptedFiles[0])
+                    }
+                  }}
+                  disabled={user.id.toString() !== auth.user.id.toString()}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <img
+                        src={process.env.NEXT_PUBLIC_API_STORAGE + user.avatar}
+                        alt={user.name}
+                        style={{
+                          cursor:
+                            user.id.toString() !== auth.user.id.toString()
+                              ? 'default'
+                              : 'pointer'
+                        }}
+                      />
+                    </div>
+                  )}
+                </Dropzone>
                 <label>{user.name}</label>
               </div>
               <div className="follow-container">
@@ -190,7 +234,6 @@ const Profile: React.FC = () => {
             </div>
             <div className="user-posts">
               {userPosts.map(post => {
-                console.log(process.env.NEXT_PUBLIC_API_STORAGE + post.media)
                 return (
                   <PostCard
                     key={post.id}
