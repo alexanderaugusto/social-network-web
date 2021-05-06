@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import api from '../services/api'
+import Dropzone from 'react-dropzone'
 import { useAuth } from '../contexts/auth'
 import { Button, Header, InputArea, PostCard } from '../components'
 
@@ -25,7 +26,7 @@ type PostProps = {
 
 type NewPostProps = {
   description: string
-  media: string
+  file: any
 }
 
 const Home: React.FC = () => {
@@ -33,8 +34,7 @@ const Home: React.FC = () => {
   const [posts, setPosts] = useState<Array<PostProps>>([])
   const [newPost, setNewPost] = useState<NewPostProps>({
     description: '',
-    media:
-      'https://img.freepik.com/vetores-gratis/imagens-animadas-abstratas-neon-lines_23-2148344065.jpg?size=626&ext=jpg'
+    file: null
   })
 
   const getUserTimeline = useCallback(async () => {
@@ -83,18 +83,29 @@ const Home: React.FC = () => {
     setPosts(newPosts)
   }
 
+  function addFile(acceptedFile) {
+    const file = acceptedFile
+    file.preview = URL.createObjectURL(acceptedFile)
+    setNewPost({ ...newPost, file })
+  }
+
   async function publishPost() {
-    const data = {
-      description: newPost.description,
-      media: newPost.media
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     }
 
+    const data = new FormData()
+    data.append('description', newPost.description)
+    data.append('file', newPost.file)
+
     await api
-      .post('/posts', data)
+      .post('/posts', data, config)
       .then(() => {
         setNewPost({
           description: '',
-          media: ''
+          file: null
         })
       })
       .catch(err => {
@@ -139,11 +150,30 @@ const Home: React.FC = () => {
                 setNewPost({ ...newPost, description: e.target.value })
               }
             />
+            {newPost.file && (
+              <div className="image-preview">
+                <img src={newPost.file.preview} alt="post preview" />
+              </div>
+            )}
             <div className="actions">
-              <Button id="btn-image">
-                <ImageIcon id="icon" />
-                <label>Adicionar imagem</label>
-              </Button>
+              <Dropzone
+                accept={['image/jpeg', 'image/png', 'image/webp']}
+                onDrop={acceptedFiles => {
+                  if (acceptedFiles) {
+                    addFile(acceptedFiles[0])
+                  }
+                }}
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <Button id="btn-image">
+                      <ImageIcon id="icon" />
+                      <label>Adicionar imagem</label>
+                    </Button>
+                  </div>
+                )}
+              </Dropzone>
               <Button id="btn-publish" onClick={publishPost}>
                 Publicar
               </Button>

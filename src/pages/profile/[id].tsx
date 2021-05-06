@@ -160,6 +160,8 @@ const Profile: React.FC = () => {
       })
   }
 
+  console.log(userPosts)
+
   return (
     <div>
       <Head>
