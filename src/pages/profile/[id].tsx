@@ -153,7 +153,10 @@ const Profile: React.FC = () => {
           <div className="user-profile">
             <div className="user-info">
               <div className="user">
-                <img src={user.avatar} alt={user.name} />
+                <img
+                  src={process.env.NEXT_PUBLIC_API_STORAGE + user.avatar}
+                  alt={user.name}
+                />
                 <label>{user.name}</label>
               </div>
               <div className="follow-container">
@@ -187,6 +190,7 @@ const Profile: React.FC = () => {
             </div>
             <div className="user-posts">
               {userPosts.map(post => {
+                console.log(process.env.NEXT_PUBLIC_API_STORAGE + post.media)
                 return (
                   <PostCard
                     key={post.id}

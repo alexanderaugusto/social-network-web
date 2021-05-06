@@ -67,7 +67,12 @@ const Header: React.FC = () => {
                     <div key={user.id} className="user">
                       <Link href={`/profile/${user.id}`}>
                         <a>
-                          <img src={user.avatar} alt={user.name} />
+                          <img
+                            src={
+                              process.env.NEXT_PUBLIC_API_STORAGE + user.avatar
+                            }
+                            alt={user.name}
+                          />
                           <label>{user.name}</label>
                         </a>
                       </Link>
@@ -82,7 +87,10 @@ const Header: React.FC = () => {
           <div className="user">
             <Link href={`/profile/${auth.user.id}`}>
               <a>
-                <img src={auth.user.avatar} alt={auth.user.name} />
+                <img
+                  src={process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar}
+                  alt={auth.user.name}
+                />
               </a>
             </Link>
           </div>

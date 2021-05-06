@@ -74,7 +74,10 @@ const PostCard: React.FC<PostCardProps> = ({
       <div className="user">
         <Link href={`/profile/${post.owner.id}`}>
           <a>
-            <img src={post.owner.avatar} alt={post.owner.name} />
+            <img
+              src={process.env.NEXT_PUBLIC_API_STORAGE + post.owner.avatar}
+              alt={post.owner.name}
+            />
           </a>
         </Link>
         <Link href={`/profile/${post.owner.id}`}>
@@ -85,7 +88,10 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
       <div className="post">
         <h2>{post.description}</h2>
-        <img src={post.media} alt={post.description} />
+        <img
+          src={process.env.NEXT_PUBLIC_API_STORAGE + post.media}
+          alt={post.description}
+        />
       </div>
       <div className="actions">
         <Button

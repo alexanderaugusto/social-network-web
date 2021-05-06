@@ -120,7 +120,10 @@ const Home: React.FC = () => {
             <div className="user">
               <Link href={`/profile/${auth.user.id}`}>
                 <a>
-                  <img src={auth.user.avatar} alt={auth.user.name} />
+                  <img
+                    src={process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar}
+                    alt={auth.user.name}
+                  />
                 </a>
               </Link>
               <Link href={`/profile/${auth.user.id}`}>

@@ -138,7 +138,10 @@ const Post: React.FC = () => {
         {postInfo && (
           <div className="post">
             <div className="post-image">
-              <img src={postInfo.media} alt={postInfo.description} />
+              <img
+                src={process.env.NEXT_PUBLIC_API_STORAGE + postInfo.media}
+                alt={postInfo.description}
+              />
             </div>
 
             <div className="post-info-container">
@@ -147,7 +150,10 @@ const Post: React.FC = () => {
                   <Link href={`/profile/${postInfo.owner.id}`}>
                     <a>
                       <img
-                        src={postInfo.owner.avatar}
+                        src={
+                          process.env.NEXT_PUBLIC_API_STORAGE +
+                          postInfo.owner.avatar
+                        }
                         alt={postInfo.owner.name}
                       />
                     </a>
@@ -169,7 +175,10 @@ const Post: React.FC = () => {
                         <Link href={`/profile/${comment.user.id}`}>
                           <a>
                             <img
-                              src={comment.user.avatar}
+                              src={
+                                process.env.NEXT_PUBLIC_API_STORAGE +
+                                comment.user.avatar
+                              }
                               alt={comment.user.name}
                             />
                           </a>
@@ -220,7 +229,10 @@ const Post: React.FC = () => {
                 <Link key={post.id} href={`/post/${post.id}`}>
                   <a>
                     <div className="owner-post">
-                      <img src={post.media} alt={post.description} />
+                      <img
+                        src={process.env.NEXT_PUBLIC_API_STORAGE + post.media}
+                        alt={post.description}
+                      />
                     </div>
                   </a>
                 </Link>
