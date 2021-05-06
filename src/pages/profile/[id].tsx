@@ -15,6 +15,7 @@ type UserProps = {
   avatar: string
   totalFollowers: number
   totalFollowings: number
+  totalPosts: number
 }
 
 type PostProps = {
@@ -60,7 +61,7 @@ const Profile: React.FC = () => {
   const isFollowerByAuthenticatedUser = useCallback(async () => {
     await api
       .get(`/users/${auth.user.id}/follow/${userId}`)
-      .then(res => {
+      .then(() => {
         setUserFollows(true)
       })
       .catch(err => {
@@ -170,6 +171,10 @@ const Profile: React.FC = () => {
                     )}
                   </div>
                 )}
+                <div className="follow">
+                  <h2>Publicações</h2>
+                  <p>{user.totalPosts}</p>
+                </div>
                 <div className="follow">
                   <h2>Seguidores</h2>
                   <p>{user.totalFollowers}</p>
