@@ -140,6 +140,11 @@ const Profile: React.FC = () => {
     setUserPosts(newPosts)
   }
 
+  async function removePost(postId: number) {
+    const newPosts = userPosts.filter(post => post.id !== postId)
+    setUserPosts(newPosts)
+  }
+
   async function changeAvatar(file) {
     const config = {
       headers: {
@@ -271,6 +276,7 @@ const Profile: React.FC = () => {
                     post={post}
                     onAddReaction={() => addReactionToPost(post.id)}
                     onRemoveReaction={() => removeReactionFromPost(post.id)}
+                    onDeletePost={() => removePost(post.id)}
                   />
                 )
               })}

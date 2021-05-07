@@ -3,12 +3,14 @@ import React from 'react'
 import Button from './Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAlert } from '../contexts/alert'
 import { useAuth } from '../contexts/auth'
 import api from '../services/api'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import CommentIcon from '@material-ui/icons/Comment'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 type UserProps = {
   id: number
@@ -30,14 +32,17 @@ type PostCardProps = {
   post: PostProps
   onAddReaction: () => void
   onRemoveReaction: () => void
+  onDeletePost?: () => void
 }
 
 const PostCard: React.FC<PostCardProps> = ({
   post,
   onAddReaction,
-  onRemoveReaction
+  onRemoveReaction,
+  onDeletePost
 }) => {
   const router = useRouter()
+  const alert = useAlert()
   const auth = useAuth()
 
   async function addReactionToPost() {
@@ -70,22 +75,44 @@ const PostCard: React.FC<PostCardProps> = ({
     return post.reactions.includes(auth.user.id)
   }
 
+  async function deletePost() {
+    await api
+      .delete(`/posts/${post.id}`)
+      .then(() => {
+        onDeletePost()
+      })
+      .catch(err => {
+        const type = err.response.status >= 500 ? 'error' : 'warning'
+        const title = 'Algo deu errado :('
+        const message = 'Não conseguimos apagar seu post, tente novamente..'
+        alert.show(type, title, message)
+        console.error(err)
+      })
+  }
+
   return (
     <div className="post-card-container">
-      <div className="user">
-        <Link href={`/profile/${post.owner.id}`}>
-          <a>
-            <img
-              src={process.env.NEXT_PUBLIC_API_STORAGE + post.owner.avatar}
-              alt={post.owner.name}
-            />
-          </a>
-        </Link>
-        <Link href={`/profile/${post.owner.id}`}>
-          <a>
-            <label>{post.owner.name}</label>
-          </a>
-        </Link>
+      <div className="user-container">
+        <div className="user">
+          <Link href={`/profile/${post.owner.id}`}>
+            <a>
+              <img
+                src={process.env.NEXT_PUBLIC_API_STORAGE + post.owner.avatar}
+                alt={post.owner.name}
+              />
+            </a>
+          </Link>
+          <Link href={`/profile/${post.owner.id}`}>
+            <a>
+              <label>{post.owner.name}</label>
+            </a>
+          </Link>
+        </div>
+        {onDeletePost && auth.user.id.toString() === post.owner.id.toString() && (
+          <Button onClick={() => deletePost()}>
+            <DeleteIcon id="icon" />
+          </Button>
+        )}
       </div>
       <div className="post">
         <h2>{post.description}</h2>

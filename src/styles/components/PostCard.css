@@ -8,6 +8,12 @@
   margin-top: 20px;
 }
 
+.post-card-container .user-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .post-card-container .user{
   display: flex;
   align-items: center;
@@ -28,6 +34,14 @@
 }
 .post-card-container .user label:hover{
   text-decoration: underline;
+}
+
+.post-card-container .user-container button{
+  color: #6c757d;
+}
+
+.post-card-container .user-container button #icon{
+  font-size: 25px;
 }
 
 .post-card-container .post{
