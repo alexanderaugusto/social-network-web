@@ -4,6 +4,7 @@ import Link from 'next/link'
 import api from '../services/api'
 import Dropzone from 'react-dropzone'
 import { useAuth } from '../contexts/auth'
+import { useAlert } from '../contexts/alert'
 import { Button, Header, InputArea, PostCard } from '../components'
 
 import ImageIcon from '@material-ui/icons/Image'
@@ -30,6 +31,7 @@ type NewPostProps = {
 }
 
 const Home: React.FC = () => {
+  const alert = useAlert()
   const auth = useAuth()
   const [posts, setPosts] = useState<Array<PostProps>>([])
   const [newPost, setNewPost] = useState<NewPostProps>({
@@ -89,6 +91,17 @@ const Home: React.FC = () => {
     setNewPost({ ...newPost, file })
   }
 
+  function validate() {
+    if (newPost.description.length >= 3 || newPost.file !== null) {
+      publishPost()
+    } else {
+      const type = 'warning'
+      const title = 'Algo deu errado :('
+      const message = 'Seu post deve conter uma descrição ou uma imagem'
+      alert.show(type, title, message)
+    }
+  }
+
   async function publishPost() {
     const config = {
       headers: {
@@ -109,6 +122,11 @@ const Home: React.FC = () => {
         })
       })
       .catch(err => {
+        const type = err.response.status >= 500 ? 'error' : 'warning'
+        const title = 'Algo deu errado :('
+        const message =
+          'Não conseguimos criar seu post, verifique se vc está enviando os dados corretamente.'
+        alert.show(type, title, message)
         console.error(err)
       })
   }
@@ -174,7 +192,7 @@ const Home: React.FC = () => {
                   </div>
                 )}
               </Dropzone>
-              <Button id="btn-publish" onClick={publishPost}>
+              <Button id="btn-publish" onClick={validate}>
                 Publicar
               </Button>
             </div>

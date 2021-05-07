@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Dropzone from 'react-dropzone'
 import { useAuth } from '../../contexts/auth'
+import { useAlert } from '../../contexts/alert'
 import api from '../../services/api'
 import { Button, Header, PostCard } from '../../components'
 
@@ -30,6 +31,7 @@ type PostProps = {
 }
 
 const Profile: React.FC = () => {
+  const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
   const { id: userId } = router.query
@@ -156,6 +158,10 @@ const Profile: React.FC = () => {
         auth.setUser(res.data)
       })
       .catch(err => {
+        const type = err.response.status >= 500 ? 'error' : 'warning'
+        const title = 'Algo deu errado :('
+        const message = 'Não conseguimos atualizar sua image, tente novamente.'
+        alert.show(type, title, message)
         console.error(err)
       })
   }

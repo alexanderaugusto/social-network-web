@@ -4,13 +4,16 @@ import Link from 'next/link'
 import Dropzone from 'react-dropzone'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
+import { useAlert } from '../../contexts/alert'
 import api from '../../services/api'
+import inputValidation from '../../utils/inputValidation'
 import { Button, Input } from '../../components'
 
 const DEFAULT_AVATAR =
   process.env.NEXT_PUBLIC_API_STORAGE + 'lazy/user/default-avatar.png'
 
 const Register: React.FC = () => {
+  const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
   const [userData, setUserData] = useState({
@@ -28,6 +31,22 @@ const Register: React.FC = () => {
     const avatar = file
     avatar.preview = URL.createObjectURL(file)
     setUserData({ ...userData, avatar })
+  }
+
+  function validate() {
+    const { name, email, password } = userData
+    if (
+      inputValidation.name(name) &&
+      inputValidation.name(email) &&
+      inputValidation.name(password)
+    ) {
+      register()
+    } else {
+      const type = 'warning'
+      const title = 'Algo deu errado :('
+      const message = 'Seus dados estão inválidos, tente novamente.'
+      alert.show(type, title, message)
+    }
   }
 
   async function login() {
@@ -60,6 +79,10 @@ const Register: React.FC = () => {
         login()
       })
       .catch(err => {
+        const type = err.response.status >= 500 ? 'error' : 'warning'
+        const title = 'Algo deu errado :('
+        const message = 'Seus dados estão inválidos, tente novamente.'
+        alert.show(type, title, message)
         console.error(err)
       })
   }
@@ -75,7 +98,7 @@ const Register: React.FC = () => {
           <form
             onSubmit={e => {
               e.preventDefault()
-              register()
+              validate()
             }}
           >
             <Dropzone
