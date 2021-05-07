@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios'
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import api from '../services/api'
 
 type UserProps = {
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider: React.FC = ({ children }) => {
+  const router = useRouter()
   const [user, setUser] = useState<UserProps | null>(null)
 
   async function loadStorageData() {
@@ -38,13 +40,16 @@ export const AuthProvider: React.FC = ({ children }) => {
           console.error(err)
           api.defaults.headers.Authorization = ''
           localStorage.clear()
+          router.push('/login')
         })
+    } else {
+      router.push('/login')
     }
   }
 
   useEffect(() => {
     loadStorageData()
-  }, [])
+  }, [loadStorageData, router])
 
   function signIn(email: string, password: string) {
     return new Promise<AxiosResponse>((resolve, reject) => {
