@@ -53,7 +53,7 @@ const Header: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [searchRef, menuOpen])
+  }, [searchRef, searchFocus])
 
   async function searchUsers() {
     const config = {
