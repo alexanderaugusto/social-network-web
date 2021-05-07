@@ -17,6 +17,12 @@
   justify-content: space-between;
 }
 
+.profile-page .user-profile .user-info .user-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .profile-page .user-profile .user-info .user{
   display: flex;
   align-items: flex-start;
@@ -38,6 +44,26 @@
   font-weight: bold;
 }
 
+.profile-page .user-profile .user-info .user-container .follow button{
+  background-color: #363636;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.profile-page .user-profile .user-info .user-container .follow #btn-unfollow{
+  background-color: #6c757d;
+  padding: 10px 20px 10px 20px;
+}
+
+.profile-page .user-profile .user-info .user-container .follow #btn-unfollow #icon{
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.profile-page .user-profile .user-info .user-container .follow #btn-follow{
+  background-color: #363636;
+  padding: 10px 25px 10px 25px;
+}
 
 .profile-page .user-profile .user-info .follow-container{
   display: flex;
@@ -50,26 +76,6 @@
   align-items: center;
   margin-top: 10px;
   margin-left: 40px;
-}
-
-.profile-page .user-profile .user-info .follow-container .follow button{
-  background-color: #363636;
-  height: 40px;
-}
-
-.profile-page .user-profile .user-info .follow-container .follow #btn-unfollow{
-  background-color: #6c757d;
-  padding: 10px 20px 10px 20px;
-}
-
-.profile-page .user-profile .user-info .follow-container .follow #btn-unfollow #icon{
-  margin-right: 5px;
-  font-size: 15px;
-}
-
-.profile-page .user-profile .user-info .follow-container .follow #btn-follow{
-  background-color: #363636;
-  padding: 10px 25px 10px 25px;
 }
 
 .profile-page .user-profile .user-info .follow-container .follow h2{
@@ -89,4 +95,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media(max-width: 800px){
+  .profile-page .user-profile .user-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

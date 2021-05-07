@@ -226,35 +226,37 @@ const Profile: React.FC = () => {
         {user && (
           <div className="user-profile">
             <div className="user-info">
-              <div className="user">
-                <Dropzone
-                  accept={['image/jpeg', 'image/png', 'image/webp']}
-                  onDrop={acceptedFiles => {
-                    if (acceptedFiles) {
-                      changeAvatar(acceptedFiles[0])
-                    }
-                  }}
-                  disabled={user.id.toString() !== auth.user.id.toString()}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <img
-                        src={process.env.NEXT_PUBLIC_API_STORAGE + user.avatar}
-                        alt={user.name}
-                        style={{
-                          cursor:
-                            user.id.toString() !== auth.user.id.toString()
-                              ? 'default'
-                              : 'pointer'
-                        }}
-                      />
-                    </div>
-                  )}
-                </Dropzone>
-                <label>{user.name}</label>
-              </div>
-              <div className="follow-container">
+              <div className="user-container">
+                <div className="user">
+                  <Dropzone
+                    accept={['image/jpeg', 'image/png', 'image/webp']}
+                    onDrop={acceptedFiles => {
+                      if (acceptedFiles) {
+                        changeAvatar(acceptedFiles[0])
+                      }
+                    }}
+                    disabled={user.id.toString() !== auth.user.id.toString()}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <img
+                          src={
+                            process.env.NEXT_PUBLIC_API_STORAGE + user.avatar
+                          }
+                          alt={user.name}
+                          style={{
+                            cursor:
+                              user.id.toString() !== auth.user.id.toString()
+                                ? 'default'
+                                : 'pointer'
+                          }}
+                        />
+                      </div>
+                    )}
+                  </Dropzone>
+                  <label>{user.name}</label>
+                </div>
                 {userId.toString() !== auth?.user?.id.toString() && (
                   <div className="follow">
                     {userFollows ? (
@@ -269,6 +271,8 @@ const Profile: React.FC = () => {
                     )}
                   </div>
                 )}
+              </div>
+              <div className="follow-container">
                 <div className="follow">
                   <h2>Publicações</h2>
                   <p>{user.totalPosts}</p>
