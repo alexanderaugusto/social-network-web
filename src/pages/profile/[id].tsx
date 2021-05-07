@@ -113,9 +113,9 @@ const Profile: React.FC = () => {
 
   async function addReactionToPost(postId: number) {
     let newPosts = userPosts
-    newPosts = userPosts.map(post => {
+    newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        post.reactions.push(1)
+        post.reactions.push(auth.user.id)
         post.totalReactions += 1
         return post
       }
@@ -129,7 +129,7 @@ const Profile: React.FC = () => {
     let newPosts = userPosts
     newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        const index = post.reactions.indexOf(1)
+        const index = post.reactions.indexOf(auth.user.id)
         post.reactions.splice(index)
         post.totalReactions -= 1
         return post
