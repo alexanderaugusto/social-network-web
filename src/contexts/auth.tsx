@@ -87,10 +87,10 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   function signOut() {
+    router.push('/auth/login')
     localStorage.clear()
     api.defaults.headers.Authorization = ''
     setUser(null)
-    router.push('/auth/login')
   }
 
   return (

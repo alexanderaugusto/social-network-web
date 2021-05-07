@@ -73,7 +73,7 @@ const Profile: React.FC = () => {
 
   const isFollowerByAuthenticatedUser = useCallback(async () => {
     await api
-      .get(`/users/${auth.user.id}/follow/${userId}`)
+      .get(`/users/${auth.user?.id}/follow/${userId}`)
       .then(() => {
         setUserFollows(true)
       })
@@ -125,7 +125,7 @@ const Profile: React.FC = () => {
     let newPosts = userPosts
     newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        post.reactions.push(auth.user.id)
+        post.reactions.push(auth.user?.id)
         post.totalReactions += 1
         return post
       }
@@ -139,7 +139,7 @@ const Profile: React.FC = () => {
     let newPosts = userPosts
     newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        const index = post.reactions.indexOf(auth.user.id)
+        const index = post.reactions.indexOf(auth.user?.id)
         post.reactions.splice(index)
         post.totalReactions -= 1
         return post
@@ -168,7 +168,7 @@ const Profile: React.FC = () => {
     loader.start()
 
     await api
-      .put(`/users/${auth.user.id}/avatar`, data, config)
+      .put(`/users/${auth.user?.id}/avatar`, data, config)
       .then(res => {
         const { avatar } = res.data
         const newUser = { ...user, avatar }
@@ -235,7 +235,7 @@ const Profile: React.FC = () => {
                         changeAvatar(acceptedFiles[0])
                       }
                     }}
-                    disabled={user.id.toString() !== auth.user.id.toString()}
+                    disabled={user.id.toString() !== auth.user?.id.toString()}
                   >
                     {({ getRootProps, getInputProps }) => (
                       <div {...getRootProps()}>
@@ -247,7 +247,7 @@ const Profile: React.FC = () => {
                           alt={user.name}
                           style={{
                             cursor:
-                              user.id.toString() !== auth.user.id.toString()
+                              user.id.toString() !== auth.user?.id.toString()
                                 ? 'default'
                                 : 'pointer'
                           }}

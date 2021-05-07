@@ -72,7 +72,7 @@ const PostCard: React.FC<PostCardProps> = ({
       return false
     }
 
-    return post.reactions.includes(auth.user.id)
+    return post.reactions.includes(auth.user?.id)
   }
 
   async function deletePost() {
@@ -108,7 +108,7 @@ const PostCard: React.FC<PostCardProps> = ({
             </a>
           </Link>
         </div>
-        {onDeletePost && auth.user.id.toString() === post.owner.id.toString() && (
+        {onDeletePost && auth.user?.id.toString() === post.owner.id.toString() && (
           <Button onClick={() => deletePost()}>
             <DeleteIcon id="icon" />
           </Button>

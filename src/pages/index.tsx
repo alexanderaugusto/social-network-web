@@ -66,7 +66,7 @@ const Home: React.FC = () => {
     let newPosts = posts
     newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        post.reactions.push(auth.user.id)
+        post.reactions.push(auth.user?.id)
         post.totalReactions += 1
         return post
       }
@@ -80,7 +80,7 @@ const Home: React.FC = () => {
     let newPosts = posts
     newPosts = newPosts.map(post => {
       if (post.id === postId) {
-        const index = post.reactions.indexOf(auth.user.id)
+        const index = post.reactions.indexOf(auth.user?.id)
         post.reactions.splice(index)
         post.totalReactions -= 1
         return post
@@ -160,14 +160,16 @@ const Home: React.FC = () => {
               <Link href={`/profile/${auth.user.id}`}>
                 <a>
                   <img
-                    src={process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar}
-                    alt={auth.user.name}
+                    src={
+                      process.env.NEXT_PUBLIC_API_STORAGE + auth.user?.avatar
+                    }
+                    alt={auth.user?.name}
                   />
                 </a>
               </Link>
-              <Link href={`/profile/${auth.user.id}`}>
+              <Link href={`/profile/${auth.user?.id}`}>
                 <a>
-                  <label>{auth.user.name}</label>
+                  <label>{auth.user?.name}</label>
                 </a>
               </Link>
             </div>

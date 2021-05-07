@@ -129,26 +129,27 @@ const Header: React.FC = () => {
               <Button onClick={() => setMenuOpen(!menuOpen)}>
                 <img
                   src={process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar}
-                  alt={auth.user.name}
+                  alt={auth.user?.name}
                 />
               </Button>
             </div>
             {menuOpen && (
               <div className="user-options">
                 <div className="user">
-                  <Link href={`/profile/${auth.user.id}`}>
+                  <Link href={`/profile/${auth.user?.id}`}>
                     <a>
                       <img
                         src={
-                          process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar
+                          process.env.NEXT_PUBLIC_API_STORAGE +
+                          auth.user?.avatar
                         }
-                        alt={auth.user.name}
+                        alt={auth.user?.name}
                       />
                     </a>
                   </Link>
-                  <Link href={`/profile/${auth.user.id}`}>
+                  <Link href={`/profile/${auth.user?.id}`}>
                     <a className="name">
-                      <label>{auth.user.name}</label>
+                      <label>{auth.user?.name}</label>
                       <p>Veja seu perfil</p>
                     </a>
                   </Link>

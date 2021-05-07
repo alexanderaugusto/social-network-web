@@ -208,7 +208,7 @@ const Post: React.FC = () => {
                       <div className="comment">
                         <p>{comment.description}</p>
                       </div>
-                      {comment.user.id === auth.user.id && (
+                      {comment.user?.id === auth.user?.id && (
                         <Button onClick={() => deleteComment(comment.id)}>
                           <DeleteIcon id="icon" />
                         </Button>
