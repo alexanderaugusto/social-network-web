@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
+import { useAlert } from '../../contexts/alert'
 import api from '../../services/api'
 import { Button, Header, Input } from '../../components'
 
@@ -32,6 +33,7 @@ type PostCommentsProps = {
 }
 
 const Post: React.FC = () => {
+  const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
   const { id: postId } = router.query
@@ -109,6 +111,11 @@ const Post: React.FC = () => {
         setUserComment('')
       })
       .catch(err => {
+        const type = 'warning'
+        const title = 'Algo deu errado :('
+        const message =
+          'Não conseguimos enviar seu comentário, tente novamente.'
+        alert.show(type, title, message)
         console.error(err)
       })
   }
