@@ -180,7 +180,7 @@ const Profile: React.FC = () => {
     }
 
     const data = new FormData()
-    data.append('description', 'Atualizando imagem de perfil...')
+    data.append('description', 'Atualizando foto de perfil...')
     data.append('file', file)
 
     await api
