@@ -53,7 +53,11 @@ const Register: React.FC = () => {
     await auth
       .signIn(userData.email, userData.password)
       .then(() => {
-        router.push('/')
+        if (userData.avatar) {
+          createPostFromImage()
+        } else {
+          router.push('/')
+        }
       })
       .catch(err => {
         console.error(err)
@@ -85,6 +89,22 @@ const Register: React.FC = () => {
         alert.show(type, title, message)
         console.error(err)
       })
+  }
+
+  function createPostFromImage() {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+
+    const data = new FormData()
+    data.append('description', 'Atualizando foto de perfil...')
+    data.append('file', userData.avatar)
+
+    api.post('/posts', data, config)
+
+    router.push('/')
   }
 
   return (
