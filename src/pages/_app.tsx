@@ -5,6 +5,7 @@ import { AuthProvider } from '../contexts/auth'
 import '../styles/global.css'
 
 import '../styles/pages/Home.css'
+import '../styles/pages/Login.css'
 import '../styles/pages/Post.css'
 import '../styles/pages/PostMedia.css'
 import '../styles/pages/Profile.css'

@@ -1,5 +1,11 @@
 import { AxiosResponse } from 'axios'
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback
+} from 'react'
 import { useRouter } from 'next/router'
 import api from '../services/api'
 
@@ -25,7 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const router = useRouter()
   const [user, setUser] = useState<UserProps | null>(null)
 
-  async function loadStorageData() {
+  const loadStorageData = useCallback(async () => {
     const userToken = localStorage.getItem('user-token')
 
     if (userToken) {
@@ -40,16 +46,21 @@ export const AuthProvider: React.FC = ({ children }) => {
           console.error(err)
           api.defaults.headers.Authorization = ''
           localStorage.clear()
-          router.push('/login')
+          router.push('/auth/login')
         })
     } else {
-      router.push('/login')
+      router.push('/auth/login')
     }
-  }
+  }, [router])
 
   useEffect(() => {
-    loadStorageData()
-  }, [loadStorageData, router])
+    if (
+      !router.pathname.includes('/auth/login') &&
+      !router.pathname.includes('/auth/register')
+    ) {
+      loadStorageData()
+    }
+  }, [router.pathname])
 
   function signIn(email: string, password: string) {
     return new Promise<AxiosResponse>((resolve, reject) => {
@@ -79,7 +90,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.clear()
     api.defaults.headers.Authorization = ''
     setUser(null)
-    router.push('/login')
+    router.push('/auth/login')
   }
 
   return (
