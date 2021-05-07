@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   const [searchFocus, setSearchFocus] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
+  const searchRef = useRef(null)
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -35,6 +36,24 @@ const Header: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [menuRef, menuOpen])
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchFocus(false)
+      }
+    }
+
+    if (searchFocus) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [searchRef, menuOpen])
 
   async function searchUsers() {
     const config = {
@@ -63,7 +82,7 @@ const Header: React.FC = () => {
             </a>
           </Link>
         </div>
-        <div className="search-container">
+        <div className="search-container" ref={searchRef}>
           <form
             className="search-input"
             onSubmit={e => {
@@ -77,7 +96,7 @@ const Header: React.FC = () => {
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
               onFocus={() => setSearchFocus(true)}
-              onBlur={() => setSearchFocus(false)}
+              // onBlur={() => setSearchFocus(false)}
               onKeyUp={() => searchUsers()}
             />
             <SearchIcon id="icon" />
@@ -105,7 +124,7 @@ const Header: React.FC = () => {
           </form>
         </div>
         {auth.signed && (
-          <div>
+          <div ref={menuRef}>
             <div className="user">
               <Button onClick={() => setMenuOpen(!menuOpen)}>
                 <img
@@ -115,7 +134,7 @@ const Header: React.FC = () => {
               </Button>
             </div>
             {menuOpen && (
-              <div className="user-options" ref={menuRef}>
+              <div className="user-options">
                 <div className="user">
                   <Link href={`/profile/${auth.user.id}`}>
                     <a>

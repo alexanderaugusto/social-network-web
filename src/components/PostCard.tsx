@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react'
 import Button from './Button'
 import Link from 'next/link'
@@ -88,10 +89,13 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
       <div className="post">
         <h2>{post.description}</h2>
-        <img
-          src={process.env.NEXT_PUBLIC_API_STORAGE + post.media}
-          alt={post.description}
-        />
+        {post.media !== 'lazy/post/default-post.jpg' &&
+          post.media !== 'lazy-dev/post/default-post.jpg' && (
+            <img
+              src={process.env.NEXT_PUBLIC_API_STORAGE + post.media}
+              alt={post.description}
+            />
+          )}
       </div>
       <div className="actions">
         <Button
