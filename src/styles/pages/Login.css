@@ -1,10 +1,59 @@
 .login-page{
-  /* background-image: url('../../assets/bg13.jpg');
+  background-image: url('../../assets/bg13.jpg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; */
-  width: 100vw !important;
-  height: 100vh !important;
-  background-color: red;
-  display: fixed;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.login-page .login-container{
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90vw;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-page .login-container img{
+  width: 150px;
+}
+
+.login-page .login-container form{
+  width: 100%;
+}
+
+.login-page .login-container .input{
+  margin-top: 10px;
+}
+
+.login-page .login-container .input-container{
+  border: 2px solid rgba(108, 117, 125, 0.2);
+  margin-top: 5px;
+}
+
+.login-page .login-container button{
+  width: 100%;
+  height: 45px;
+}
+
+.login-page .login-container #btn-login{
+  margin-top: 20px;
+  background-color: #363636;
+  color: #FFFFFF;
+}
+
+.login-page .login-container #btn-register{
+  margin-top: 10px;
+  background-color: transparent;
+  color: #363636;
+  border: 2px solid #363636;
+}
+
+
