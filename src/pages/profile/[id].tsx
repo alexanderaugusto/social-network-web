@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Dropzone from 'react-dropzone'
 import { useAuth } from '../../contexts/auth'
 import { useAlert } from '../../contexts/alert'
+import { useLoader } from '../../contexts/loader'
 import api from '../../services/api'
 import { Button, Header, PostCard } from '../../components'
 
@@ -31,6 +32,7 @@ type PostProps = {
 }
 
 const Profile: React.FC = () => {
+  const loader = useLoader()
   const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
@@ -40,6 +42,8 @@ const Profile: React.FC = () => {
   const [userPosts, setUserPosts] = useState<Array<PostProps>>([])
 
   const getUserProfile = useCallback(async () => {
+    loader.start()
+
     await api
       .get(`/users/${userId}`)
       .then(res => {
@@ -48,9 +52,13 @@ const Profile: React.FC = () => {
       .catch(err => {
         console.error(err)
       })
+
+    loader.stop()
   }, [userId])
 
   const getUserPosts = useCallback(async () => {
+    loader.start()
+
     await api
       .get(`/users/${userId}/posts`)
       .then(res => {
@@ -59,6 +67,8 @@ const Profile: React.FC = () => {
       .catch(err => {
         console.error(err)
       })
+
+    loader.stop()
   }, [userId])
 
   const isFollowerByAuthenticatedUser = useCallback(async () => {
@@ -155,6 +165,8 @@ const Profile: React.FC = () => {
     const data = new FormData()
     data.append('file', file)
 
+    loader.start()
+
     await api
       .put(`/users/${auth.user.id}/avatar`, data, config)
       .then(res => {
@@ -170,6 +182,8 @@ const Profile: React.FC = () => {
         alert.show(type, title, message)
         console.error(err)
       })
+
+    loader.stop()
   }
 
   async function createPostFromImage(file) {

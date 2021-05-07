@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
 import { useAlert } from '../../contexts/alert'
+import { useLoader } from '../../contexts/loader'
 import api from '../../services/api'
 import { Button, Header, Input } from '../../components'
 
@@ -33,6 +34,7 @@ type PostCommentsProps = {
 }
 
 const Post: React.FC = () => {
+  const loader = useLoader()
   const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
@@ -43,6 +45,8 @@ const Post: React.FC = () => {
   const [userComment, setUserComment] = useState('')
 
   const getPostInfo = useCallback(async () => {
+    loader.start()
+
     await api
       .get(`/posts/${postId}`)
       .then(res => {
@@ -51,9 +55,13 @@ const Post: React.FC = () => {
       .catch(err => {
         console.error(err)
       })
+
+    loader.stop()
   }, [postId])
 
   const getPostComments = useCallback(async () => {
+    loader.start()
+
     await api
       .get(`/posts/${postId}/comments`)
       .then(res => {
@@ -62,11 +70,15 @@ const Post: React.FC = () => {
       .catch(err => {
         console.error(err)
       })
+
+    loader.stop()
   }, [postId])
 
   const getOwnerPosts = useCallback(
     async post => {
       const ownerId = post.owner.id
+
+      loader.start()
 
       await api
         .get(`/users/${ownerId}/posts`)
@@ -79,6 +91,8 @@ const Post: React.FC = () => {
         .catch(err => {
           console.error(err)
         })
+
+      loader.stop()
     },
     [postId]
   )

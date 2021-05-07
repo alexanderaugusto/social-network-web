@@ -2,6 +2,7 @@ import React from 'react'
 import { AppProps } from 'next/app'
 import { AuthProvider } from '../contexts/auth'
 import { AlertProvider } from '../contexts/alert'
+import { LoaderProvider } from '../contexts/loader'
 
 import '../styles/global.css'
 
@@ -18,14 +19,17 @@ import '../styles/components/Header.css'
 import '../styles/components/Input.css'
 import '../styles/components/InputArea.css'
 import '../styles/components/PostCard.css'
+import '../styles/components/Loader.css'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <AlertProvider>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </AlertProvider>
+    <LoaderProvider>
+      <AlertProvider>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </AlertProvider>
+    </LoaderProvider>
   )
 }
 

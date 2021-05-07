@@ -3,11 +3,14 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
 import { useAlert } from '../../contexts/alert'
+import { useLoader } from '../../contexts/loader'
+
 import { Button, Input } from '../../components'
 
 import LazyLogo from '../../assets/lazy-black.png'
 
 const Login: React.FC = () => {
+  const loader = useLoader()
   const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
@@ -15,6 +18,8 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('')
 
   async function login() {
+    loader.start()
+
     await auth
       .signIn(email, password)
       .then(() => {
@@ -27,6 +32,8 @@ const Login: React.FC = () => {
         alert.show(type, title, message)
         console.error(err)
       })
+
+    loader.stop()
   }
 
   return (

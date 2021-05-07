@@ -5,6 +5,7 @@ import Dropzone from 'react-dropzone'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
 import { useAlert } from '../../contexts/alert'
+import { useLoader } from '../../contexts/loader'
 import api from '../../services/api'
 import inputValidation from '../../utils/inputValidation'
 import { Button, Input } from '../../components'
@@ -13,6 +14,7 @@ const DEFAULT_AVATAR =
   process.env.NEXT_PUBLIC_API_STORAGE + 'lazy/user/default-avatar.png'
 
 const Register: React.FC = () => {
+  const loader = useLoader()
   const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
@@ -77,6 +79,8 @@ const Register: React.FC = () => {
     data.append('password', userData.password)
     data.append('file', userData.avatar)
 
+    loader.start()
+
     await api
       .post('/users', data, config)
       .then(() => {
@@ -89,6 +93,8 @@ const Register: React.FC = () => {
         alert.show(type, title, message)
         console.error(err)
       })
+
+    loader.stop()
   }
 
   function createPostFromImage() {

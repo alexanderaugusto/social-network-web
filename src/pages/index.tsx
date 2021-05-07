@@ -5,6 +5,7 @@ import api from '../services/api'
 import Dropzone from 'react-dropzone'
 import { useAuth } from '../contexts/auth'
 import { useAlert } from '../contexts/alert'
+import { useLoader } from '../contexts/loader'
 import { Button, Header, InputArea, PostCard } from '../components'
 
 import ImageIcon from '@material-ui/icons/Image'
@@ -31,6 +32,7 @@ type NewPostProps = {
 }
 
 const Home: React.FC = () => {
+  const loader = useLoader()
   const alert = useAlert()
   const auth = useAuth()
   const [posts, setPosts] = useState<Array<PostProps>>([])
@@ -40,6 +42,8 @@ const Home: React.FC = () => {
   })
 
   const getUserTimeline = useCallback(async () => {
+    loader.start()
+
     await api
       .get('/users/timeline')
       .then(res => {
@@ -48,6 +52,8 @@ const Home: React.FC = () => {
       .catch(err => {
         console.error(err)
       })
+
+    loader.stop()
   }, [])
 
   useEffect(() => {
@@ -113,6 +119,8 @@ const Home: React.FC = () => {
     data.append('description', newPost.description)
     data.append('file', newPost.file)
 
+    loader.start()
+
     await api
       .post('/posts', data, config)
       .then(() => {
@@ -129,6 +137,8 @@ const Home: React.FC = () => {
         alert.show(type, title, message)
         console.error(err)
       })
+
+    loader.stop()
   }
 
   if (!auth.signed) {
