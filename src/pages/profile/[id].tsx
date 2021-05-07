@@ -156,12 +156,37 @@ const Profile: React.FC = () => {
         const { avatar } = res.data
         setUser({ ...user, avatar })
         auth.setUser(res.data)
+        createPostFromImage(file)
       })
       .catch(err => {
         const type = err.response.status >= 500 ? 'error' : 'warning'
         const title = 'Algo deu errado :('
         const message = 'Não conseguimos atualizar sua image, tente novamente.'
         alert.show(type, title, message)
+        console.error(err)
+      })
+  }
+
+  async function createPostFromImage(file) {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+
+    const data = new FormData()
+    data.append('description', 'Atualizando imagem de perfil...')
+    data.append('file', file)
+
+    await api
+      .post('/posts', data, config)
+      .then(res => {
+        const newPosts = userPosts
+        newPosts.unshift(res.data)
+        setUserPosts(newPosts)
+        setUser({ ...user, totalPosts: user.totalPosts += 1 })
+      })
+      .catch(err => {
         console.error(err)
       })
   }
