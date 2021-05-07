@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useAuth } from '../contexts/auth'
 import api from '../services/api'
@@ -8,12 +8,33 @@ import Input from './Input'
 import LazyLogo from '../assets/lazy-black.png'
 
 import SearchIcon from '@material-ui/icons/Search'
+import ExitIcon from '@material-ui/icons/ExitToApp'
 
 const Header: React.FC = () => {
   const auth = useAuth()
   const [searchText, setSearchText] = useState('')
   const [searchedUsers, setSearchedUsers] = useState([])
   const [searchFocus, setSearchFocus] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false)
+      }
+    }
+
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [menuRef, menuOpen])
 
   async function searchUsers() {
     const config = {
@@ -84,15 +105,42 @@ const Header: React.FC = () => {
           </form>
         </div>
         {auth.signed && (
-          <div className="user">
-            <Link href={`/profile/${auth.user.id}`}>
-              <a>
+          <div>
+            <div className="user">
+              <Button onClick={() => setMenuOpen(!menuOpen)}>
                 <img
                   src={process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar}
                   alt={auth.user.name}
                 />
-              </a>
-            </Link>
+              </Button>
+            </div>
+            {menuOpen && (
+              <div className="user-options" ref={menuRef}>
+                <div className="user">
+                  <Link href={`/profile/${auth.user.id}`}>
+                    <a>
+                      <img
+                        src={
+                          process.env.NEXT_PUBLIC_API_STORAGE + auth.user.avatar
+                        }
+                        alt={auth.user.name}
+                      />
+                    </a>
+                  </Link>
+                  <Link href={`/profile/${auth.user.id}`}>
+                    <a className="name">
+                      <label>{auth.user.name}</label>
+                      <p>Veja seu perfil</p>
+                    </a>
+                  </Link>
+                </div>
+
+                <Button onClick={() => auth.signOut()}>
+                  <ExitIcon id="icon" />
+                  Sair
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </div>

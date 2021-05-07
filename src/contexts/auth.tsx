@@ -77,10 +77,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   function signOut() {
     localStorage.clear()
-
     api.defaults.headers.Authorization = ''
-
     setUser(null)
+    router.push('/login')
   }
 
   return (

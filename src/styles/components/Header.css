@@ -88,3 +88,51 @@
   border-radius: 40px;
   cursor: pointer;
 }
+
+.header-container .header .user-options{
+  background-color: #FFFFFF;
+  position: absolute;
+  width: 250px;
+  height: auto;
+  top: 70px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
+  padding: 0 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: -210px;
+}
+
+.header-container .header .user-options .user{
+  border-bottom: 2px solid rgba(108, 117, 125, 0.1);
+  padding-bottom: 10px;
+}
+
+.header-container .header .user-options .user .name{
+  margin-left: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.header-container .header .user-options .user .name label{
+  color: #363636;
+  font-weight: bold;
+}
+
+.header-container .header .user-options .user .name p{
+  color: #6c757d;
+  font-size: 15px;
+}
+
+.header-container .header .user-options button{
+  color: #6c757d;
+  margin-top: 10px;
+  font-size: 16px;
+  align-self: flex-start;
+}
+
+.header-container .header .user-options button #icon{
+  color: #6c757d;
+  margin-right: 5px;
+}
+
