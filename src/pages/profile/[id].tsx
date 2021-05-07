@@ -171,9 +171,10 @@ const Profile: React.FC = () => {
       .put(`/users/${auth.user.id}/avatar`, data, config)
       .then(res => {
         const { avatar } = res.data
-        setUser({ ...user, avatar })
+        const newUser = { ...user, avatar }
+        setUser(newUser)
         auth.setUser(res.data)
-        createPostFromImage(file)
+        createPostFromImage(file, newUser)
       })
       .catch(err => {
         const type = err.response.status >= 500 ? 'error' : 'warning'
@@ -186,7 +187,7 @@ const Profile: React.FC = () => {
     loader.stop()
   }
 
-  async function createPostFromImage(file) {
+  async function createPostFromImage(file, newUser) {
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -203,7 +204,7 @@ const Profile: React.FC = () => {
         const newPosts = userPosts
         newPosts.unshift(res.data)
         setUserPosts(newPosts)
-        setUser({ ...user, totalPosts: user.totalPosts += 1 })
+        setUser({ ...newUser, totalPosts: newUser.totalPosts += 1 })
       })
       .catch(err => {
         console.error(err)
