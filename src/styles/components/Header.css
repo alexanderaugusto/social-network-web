@@ -136,3 +136,10 @@
   margin-right: 5px;
 }
 
+@media(max-width:500px){
+  .header-container .search-container .search-input{
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
