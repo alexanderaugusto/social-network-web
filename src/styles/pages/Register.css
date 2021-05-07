@@ -1,0 +1,76 @@
+.register-page{
+  background-image: url('../../assets/bg16.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-page .register-container{
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90vw;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-page .register-container form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-page .register-container .avatar{
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.register-page .register-container .avatar img{
+  width: 100%;
+  height: 100%;
+  border-radius: 150px;
+  border: 2px solid rgba(108, 117, 125, 0.2);
+}
+
+.register-page .register-container .input{
+  margin-top: 10px;
+}
+
+.register-page .register-container .input-container{
+  border: 2px solid rgba(108, 117, 125, 0.2);
+  margin-top: 5px;
+}
+
+.register-page .register-container button{
+  width: 100%;
+  height: 45px;
+  margin-top: 20px;
+  background-color: #363636;
+  color: #FFFFFF;
+}
+
+.register-page .register-container p{
+  color: #363636;
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.register-page .register-container a{
+  color: #6c757d;
+  font-weight: bold;
+}
+.register-page .register-container a:hover{
+  text-decoration: underline;
+}
+
+
+

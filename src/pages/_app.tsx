@@ -9,6 +9,7 @@ import '../styles/pages/Login.css'
 import '../styles/pages/Post.css'
 import '../styles/pages/PostMedia.css'
 import '../styles/pages/Profile.css'
+import '../styles/pages/Register.css'
 
 import '../styles/components/Button.css'
 import '../styles/components/Header.css'
