@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/auth'
+import { useAlert } from '../../contexts/alert'
 import { Button, Input } from '../../components'
 
 import LazyLogo from '../../assets/lazy-black.png'
 
 const Login: React.FC = () => {
+  const alert = useAlert()
   const auth = useAuth()
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -19,6 +21,10 @@ const Login: React.FC = () => {
         router.push('/')
       })
       .catch(err => {
+        const type = err.response.status >= 500 ? 'error' : 'warning'
+        const title = 'Algo deu errado :('
+        const message = 'E-mail ou senha incorretos, tente novamente.'
+        alert.show(type, title, message)
         console.error(err)
       })
   }
