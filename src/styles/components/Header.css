@@ -49,7 +49,7 @@
   height: 250px;
   top: 70px;
   border-radius: 8px;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
+  box-shadow: 4px 4px 12px 12px rgba(0, 0, 0, 0.06);
   padding: 0 10px 10px 10px;
   overflow-y: auto;
 }
@@ -77,63 +77,124 @@
   cursor: pointer;
 }
 
-.header-container .header .user{
+.header-container .header .user-list{
   display: flex;
   align-items: center;
 }
 
-.header-container .header .user img{
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+.header-container .header .user-list .user{
+  display: flex;
+  align-items: center;
+}
+
+.header-container .header .user-list .user img{
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
   cursor: pointer;
 }
 
-.header-container .header .user-options{
+.header-container .header .user-list .user-options{
   background-color: #FFFFFF;
   position: absolute;
   width: 250px;
   height: auto;
   top: 70px;
   border-radius: 8px;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.06);
-  padding: 0 10px 10px 10px;
+  box-shadow: 4px 4px 12px 12px rgba(0, 0, 0, 0.06);
+  padding: 10px;
   display: flex;
   flex-direction: column;
   margin-left: -210px;
 }
 
-.header-container .header .user-options .user{
+.header-container .header .user-list .user-options .user{
   border-bottom: 2px solid rgba(108, 117, 125, 0.1);
   padding-bottom: 10px;
 }
 
-.header-container .header .user-options .user .name{
+.header-container .header .user-list .user-options .user .name{
   margin-left: 10px;
   font-size: 17px;
   cursor: pointer;
 }
 
-.header-container .header .user-options .user .name label{
+.header-container .header .user-list .user-options .user .name label{
   color: #363636;
   font-weight: bold;
 }
 
-.header-container .header .user-options .user .name p{
+.header-container .header .user-list .user-options .user .name p{
   color: #6c757d;
   font-size: 15px;
 }
 
-.header-container .header .user-options button{
+.header-container .header .user-list .user-options button{
   color: #6c757d;
   margin-top: 10px;
   font-size: 16px;
   align-self: flex-start;
 }
 
-.header-container .header .user-options button #icon{
+.header-container .header .user-list .user-options button #icon{
   color: #6c757d;
   margin-right: 5px;
+}
+
+.header-container .header .user-list .notifications-container .list-icon button{
+  color: #6c757d;
+}
+
+.header-container .header .user-list .notifications-container .list-icon button #icon{
+  font-size: 30px;
+  margin-left: 20px;
+}
+
+.header-container .header .user-list .notifications-container .notifications-menu{
+  background-color: #FFFFFF;
+  position: absolute;
+  width: 250px;
+  height: auto;
+  max-height: 350px;
+  top: 70px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 12px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  margin-left: -210px;
+  overflow-y: auto;
+}
+
+.header-container .header .user-list .notifications-container .notifications-menu .notification a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-bottom: 2px solid rgba(108, 117, 125, 0.1);
+  padding: 15px;
+  transition: all 0.3s;
+  border-radius: 5px;
+}
+.header-container .header .user-list .notifications-container .notifications-menu .notification:hover{
+  background-color: rgba(108, 117, 125, 0.1);
+}
+
+.header-container .header .user-list .notifications-container .notifications-menu .notification img{
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  margin-right: 10px;
+}
+
+.header-container .header .user-list .notifications-container .notifications-menu .notification label{
+  color: #363636;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.header-container .header .user-list .notifications-container .notifications-menu .notification label span{
+  font-weight: bold;
 }
 
 @media(max-width:500px){
