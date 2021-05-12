@@ -156,6 +156,7 @@
   width: 250px;
   height: auto;
   max-height: 350px;
+  min-height: 100px;
   top: 70px;
   border-radius: 8px;
   box-shadow: 4px 4px 12px 12px rgba(0, 0, 0, 0.06);
